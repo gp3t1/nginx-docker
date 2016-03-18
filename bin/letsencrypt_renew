@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CFG_DIR=/etc/nginx/conf.d
+CFG_APPS=$CFG_DIR/sites-enabled
+
+function find_domains {
+	awk -F "[; \t]*" '{ if ( $2 == "server_name" ) print $3;  }' "$CFG_APPS"/*.conf | awk '!a[$0]++'
+}
+
+function renew_or_create_cert {
+	if [[ -z $LETSENCRYPT_EMAIL ]] ; then
+		echo "no email found! Letsencrypt won't generate ssl certificates."
+		return 2
+	fi
+	for domain in $( find_domains ); do
+		if [[ -n $domain ]]; then
+			letsencrypt-auto certonly --standalone --keep-until-expiring --agree-tos --rsa-key-size 2048 --text --email "$LETSENCRYPT_EMAIL" --domain "$domain" || return 1
+		fi
+	done
+	return 0
+}
+
+renew_or_create_cert

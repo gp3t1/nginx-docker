@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CFG_DIR=/etc/nginx/conf.d
+CFG_FILE=$CFG_DIR/nginx.conf
+
+function test_nginx {
+	nginx -t -c ${CFG_FILE} -g "daemon off;"
+}
+
+if test_nginx; then
+	nginx -c ${CFG_FILE} -s reload && exit 0
+fi
+exit 1
