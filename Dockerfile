@@ -24,7 +24,6 @@ VOLUME ["/var/log/nginx", "/usr/share/nginx", "/etc/nginx/conf.d", "/etc/letsenc
 WORKDIR /etc/nginx
 
 ##		ENV VARIABLES --------------------
-#			FROM nginx : NGINX_VERSION
 ENV PID /var/run/nginx/pid
 ENV TIMEOUT_CFG 125
 ENV LETSENCRYPT_EMAIL ""

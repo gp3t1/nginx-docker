@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CFG_DIR=/etc/nginx/conf.d
-CFG_APPS=$CFG_DIR/sites-enabled
+CFG_APPS=$CFG_DIR/ext_apps
 
 function find_domains {
 	awk -F "[; \t]*" '{ if ( $2 == "server_name" ) print $3;  }' "$CFG_APPS"/*.conf | awk '!a[$0]++'
