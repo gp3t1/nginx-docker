@@ -30,9 +30,8 @@ ENV TIMEOUT_CFG 125
 ENV LETSENCRYPT_EMAIL ""
 ENV PATH "$PATH:/var/lib/letsencrypt"
 
-COPY docker-entrypoint.sh /
 COPY bin/* /usr/local/bin/
-RUN  chmod +x /usr/local/bin/* /docker-entrypoint.sh
+RUN  chmod +x /usr/local/bin/*
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint"]
 CMD ["nginx"]

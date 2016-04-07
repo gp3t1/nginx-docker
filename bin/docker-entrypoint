@@ -3,24 +3,8 @@
 CFG_DIR=/etc/nginx/conf.d
 CFG_FILE=$CFG_DIR/nginx.conf
 CFG_APPS=$CFG_DIR/sites-enabled
-DHPARAM_FILE=$CFG_DIR/dhparam.pem
 PROXYCFG_FILE=$CFG_DIR/proxy_conf
 MIMETYPE_FILE=$CFG_DIR/mime.types
-
-function check_dhparam {
-	if [[ ! -f $DHPARAM_FILE ]]; then
-		echo "$DHPARAM_FILE not found : Generating..."
-		local debut=$( date +%s )
-		openssl dhparam -out "$DHPARAM_FILE" 2048
-		local fin=$( date +%s )
-		if [[ -f "$DHPARAM_FILE" ]]; then
-			echo "...generated in (( $fin - $debut ))s."
-			return 0
-		else
-			return 1
-		fi
-	fi
-}
 
 function check_mime {
 	if [[ ! -f "$MIMETYPE_FILE" ]]; then
@@ -121,10 +105,10 @@ function wait_config {
 }
 
 function main {
-	if ! check_dhparam; then
-		echo "Error generating dhparam ($DHPARAM_FILE) !"
+	if ! gen_dhpem; then
+		echo "Error generating dhpem file(s) !"
 		exit 1
-	fi
+	fi 
 	if ! check_mime; then
 		echo "Error retrieving mime.types !"
 		exit 2

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+CFG_DIR=/etc/nginx/conf.d
+CFG_APPS=$CFG_DIR/sites-enabled
+
+function find_dhparam_files {
+	awk -F "[; \t]*" '{ if ( $2 == "ssl_dhparam" ) print $3;  }' "$CFG_APPS"/*.conf | awk '!a[$0]++'
+}
+
+function write_dhparam_files {
+	for file in $( find_dhparam_files ); do
+		if [[ ! -f "$file" ]]; then
+			echo "[DHPARAM] Generating $file..."
+			local start=$( date +%s )
+			openssl dhparam -out "$file" 2048 || return 1
+			local end=$( date +%s )
+			echo "[DHPARAM] $file generated in (( $end - $start ))s."
+		else
+			echo "[DHPARAM] $file already exists"
+		fi
+	done
+}
+
+write_dhparam_files
