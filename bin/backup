@@ -3,6 +3,7 @@
 v_backups=/backups
 
 CFG_DIR=/etc/nginx/conf.d
+CFG_APPS=/etc/nginx/proxyconf.d
 SSL_DIR=/etc/letsencrypt
 WWW_DIR=/usr/share/nginx
 
@@ -11,4 +12,4 @@ DATE=$(date +%Y%m%d-%H%M%S)
 PREFIX=${1:-$DATE}
 
 cd /
-tar -zcf "${v_backups}/${PREFIX}_nginx.tar.gz" "$CFG_DIR" "$SSL_DIR" "$WWW_DIR"
+tar -zcf "${v_backups}/${PREFIX}_nginx.tar.gz" "$CFG_DIR" "$CFG_APPS" "$SSL_DIR" "$WWW_DIR"

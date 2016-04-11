@@ -2,7 +2,7 @@
 
 CFG_DIR=/etc/nginx/conf.d
 CFG_FILE=$CFG_DIR/nginx.conf
-CFG_APPS=$CFG_DIR/ext_apps
+CFG_APPS=/etc/nginx/proxyconf.d
 PROXYCFG_FILE=$CFG_DIR/proxy_conf
 MIMETYPE_FILE=$CFG_DIR/mime.types
 

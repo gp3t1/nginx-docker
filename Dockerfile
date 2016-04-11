@@ -20,7 +20,7 @@ RUN  rm /etc/nginx/conf.d/default.conf \
 		
 ##		VOLUMES --------------------------
 # 		from nginx image: ["/var/cache/nginx"]
-VOLUME ["/var/log/nginx", "/usr/share/nginx", "/etc/nginx/conf.d", "/etc/letsencrypt", "/backups"]
+VOLUME ["/var/log/nginx", "/usr/share/nginx", "/etc/nginx/conf.d", "/etc/nginx/proxyconf.d", "/etc/letsencrypt", "/backups"]
 WORKDIR /etc/nginx
 
 ##		ENV VARIABLES --------------------
